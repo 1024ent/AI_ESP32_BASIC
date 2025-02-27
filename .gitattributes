@@ -1,5 +1,4 @@
-# Explicitly set languages for GitHub linguist
-*.cpp linguist-detectable=true
-*.html linguist-detectable=true
-*.js linguist-detectable=true
-*.css linguist-detectable=true
+Examples/image_classification_web/* linguist-detectable
+Examples/image_classification_web/index.html linguist-language=HTML
+Examples/image_classification_web/script.js linguist-language=JavaScript
+Examples/image_classification_web/styles.css linguist-language=CSS
