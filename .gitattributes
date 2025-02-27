@@ -1,0 +1,5 @@
+# Explicitly set languages for GitHub linguist
+*.cpp linguist-detectable=true
+*.html linguist-detectable=true
+*.js linguist-detectable=true
+*.css linguist-detectable=true
