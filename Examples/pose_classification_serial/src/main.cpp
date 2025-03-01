@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#define TEXT "FUCK C++" // Text that will be printed on screen in any font
+#define TEXT "特辣的海藻" // Text that will be printed on screen in any font
 
 #include "Free_Fonts.h" // Include the header file attached to this sketch
 
@@ -35,7 +35,7 @@ void loop() {
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   
   tft.fillScreen(TFT_BLACK);
-  tft.setFreeFont(FF7);
+  tft.setFreeFont(FF8);
   tft.drawString(TEXT, 160, 120, GFXFF);
   delay(1000);
 }
