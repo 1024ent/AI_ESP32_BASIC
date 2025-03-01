@@ -5,7 +5,8 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #f0f0f0;
+  background-color: #000000;
+  color: white; /* Set text color to white */
 }
 
 .container {
@@ -14,15 +15,16 @@ body {
 
 h1 {
   margin-bottom: 20px;
+  color: white; /* Set heading text color to white */
 }
 
-#video-container {
+#gif-container {
   margin-bottom: 20px;
 }
 
-video {
-  width: 640px;
-  height: 480px;
+#gif-container img {
+  width: 400px;
+  height: 300px;
   border: 2px solid #333;
   border-radius: 10px;
 }
@@ -30,4 +32,20 @@ video {
 #label-container {
   font-size: 24px;
   font-weight: bold;
+  color: white; /* Set label text color to white */
+}
+
+#connect-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#connect-button:hover {
+  background-color: #0056b3;
 }

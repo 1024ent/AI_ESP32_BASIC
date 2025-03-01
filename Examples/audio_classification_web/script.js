@@ -1,31 +1,30 @@
 // Variables
-let video;
 let model;
 let label = "Waiting...";
 let port;
 let writer;
 
 // DOM Elements
-const videoElement = document.getElementById('video');
 const labelElement = document.getElementById('label');
 const connectButton = document.getElementById('connect-button');
 
 // Load the Teachable Machine model
 async function loadModel() {
-  const modelURL = 'https://teachablemachine.withgoogle.com/models/fa1rwLwYy/model.json';
-  model = await ml5.imageClassifier(modelURL);
+  const modelURL = 'https://teachablemachine.withgoogle.com/models/_aZ3fbVua/model.json';
+  model = await ml5.soundClassifier(modelURL);
   console.log("Model loaded!");
-  classifyVideo();
+  classifyAudio();
 }
 
 // Classify the video stream with a 0.5-second delay
-function classifyVideo() {
-  if (model) {
-    // Use setTimeout to delay the detection by 0.5 seconds (500 milliseconds)
-    setTimeout(() => {
-      model.classify(videoElement, gotResult);
-    }, 500); // 500 milliseconds = 0.5 seconds
-  }
+function classifyAudio() {
+  model.classify(gotResult);
+  // if (model) {
+  //   // Use setTimeout to delay the detection by 0.5 seconds (500 milliseconds)
+  //   setTimeout(() => {
+  //     model.classify(gotResult);
+  //   }, 500); // 500 milliseconds = 0.5 seconds
+  // }
 }
 
 // Handle the results
@@ -43,19 +42,22 @@ function gotResult(error, results) {
   let confidence = results[0].confidence;
 
   // Only update the label if confidence is greater than 0.7 (70%)
-  if (confidence > 0.7) {
+  if (confidence > 0.8) {
     // Customize the message based on the detected object
-    if (detectedLabel === "CALCULATOR") {
-      label = "🧮 Calculator is Detected!";
+    if (detectedLabel === "Backgound Noise") {
+      label = "Background audio is Detected!";
       sendToESP32(0); // Send 0 to ESP32
-    } else if (detectedLabel === "SCISSORS") {
-      label = "✂️ Scissors are Detected!";
-      sendToESP32(1); // Send 1 to ESP32
-    } else if (detectedLabel === "BACKGROUND") {
-      label = "No object detected (Background)";
+    } else if (detectedLabel === "SPICY") {
+      label = "特辣的海藻";
+      sendToESP32(1); // Send 2 to ESP32
+    } else if (detectedLabel === "OMG") {
+      label = "OMG";
       sendToESP32(2); // Send 2 to ESP32
+    } else if (detectedLabel === "PLANKTON"){
+      label = "PLANKTON MOANING";
+      sendToESP32(3); // Send 2 to ESP32      
     } else {
-      label = "Object Detected: " + detectedLabel; // Fallback for other objects
+      label = "Sound Detected: " + detectedLabel; // Fallback for other objects
     }
   } else {
     label = "Waiting..."; // Reset to "Waiting..." if confidence is low
@@ -65,7 +67,7 @@ function gotResult(error, results) {
   labelElement.innerText = label;
 
   // Continue classifying
-  classifyVideo();
+  classifyAudio();
 }
 
 // Send data to ESP32 via Web Serial API
@@ -97,25 +99,10 @@ async function connectSerialPort() {
   }
 }
 
-// Initialize the webcam and load the model
-async function init() {
-  try {
-    // Access the webcam
-    video = await navigator.mediaDevices.getUserMedia({ video: true });
-    videoElement.srcObject = video;
-    videoElement.onloadedmetadata = () => {
-      console.log("Webcam is ready!");
-      loadModel();
-    };
-  } catch (error) {
-    console.error("Error accessing the webcam:", error);
-  }
-}
-
 // Add event listener to the connect button
 connectButton.addEventListener('click', () => {
   connectSerialPort();
 });
 
 // Start the project
-init();
+loadModel();
